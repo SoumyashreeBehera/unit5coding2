@@ -7,19 +7,13 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     profile_pic: { type: String, required: true },
-    // roles: [{ type: String, required: true }],
+    roles: { type: String, required: true },
   },
   {
     versionKey: false,
     timestamps: true,
   }
 );
-
-// - name
-// - email
-// - password
-// - profile_photo_url
-// - roles
 
 userSchema.pre("save", function (next) {
   if (!this.isModified("password")) return nxt();
@@ -28,7 +22,7 @@ userSchema.pre("save", function (next) {
   return next();
 });
 
-userSchema.method.checkPassword = function (password) {
+userSchema.methods.checkPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 

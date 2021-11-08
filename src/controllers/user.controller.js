@@ -25,7 +25,7 @@ const register = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       profile_pic: files,
-      // roles: [""],
+      roles: req.body.roles,
     });
 
     //create a token and send user and token to frontend
