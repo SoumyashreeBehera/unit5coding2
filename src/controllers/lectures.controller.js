@@ -31,6 +31,15 @@ router.patch("/:id", authenticate, authorizeOne(), async function (req, res) {
   }
 });
 
+router.delete("/:id", authenticate, authorizeOne(), async function (req, res) {
+  try {
+    let lecture = await Lecture.findByIdAndDelete(req.params.id).lean().exec();
+    return res.status(200).json({ lecture });
+  } catch (err) {
+    return res.status(401).json({ message: err.message });
+  }
+});
+
 router.get("", async function (req, res) {
   try {
     let lecture = await Lecture.find().lean().exec();
